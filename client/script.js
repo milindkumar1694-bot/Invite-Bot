@@ -1,3 +1,5 @@
+const API_URL = "https://invite-bot-yzx8.onrender.com";
+
 const inviteButton = document.getElementById("inviteButton");
 const inviteStatus = document.getElementById("inviteStatus");
 let confirmed = false;
@@ -18,12 +20,14 @@ inviteButton.addEventListener("click", async () => {
   setStatus("Sent with love");
 
   try {
-    const response = await fetch("/api/invite-click", {
+    const response = await fetch(`${API_URL}/api/invite-click`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ clickedAt: new Date().toISOString() }),
     });
+
     const data = await response.json().catch(() => ({}));
+
     if (!response.ok || !data.success) {
       setStatus("Invite could not be delivered", true);
     }
