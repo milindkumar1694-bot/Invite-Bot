@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const API_URL = window.location.origin;
+=======
+const API_URL = "https://invite-bot-yzx8.onrender.com";
+>>>>>>> 5f01df9155c731c1a8727bc129c948465b96d659
 
 const inviteButton = document.getElementById("inviteButton");
 const inviteStatus = document.getElementById("inviteStatus");
