@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-const API_URL = window.location.origin;
-=======
-const API_URL = "https://invite-bot-yzx8.onrender.com";
->>>>>>> 5f01df9155c731c1a8727bc129c948465b96d659
+const API_BASE_URL =
+  (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) ||
+  window.location.origin;
 
 const inviteButton = document.getElementById("inviteButton");
 const inviteStatus = document.getElementById("inviteStatus");
@@ -30,7 +28,11 @@ let currentRoomId = "";
 let selectedImage = null;
 let selectedImageDataUrl = "";
 
-const socket = io({ autoConnect: false });
+const socket = io(API_BASE_URL, {
+  autoConnect: false,
+  reconnection: true,
+  reconnectionAttempts: 5,
+});
 
 const setStatus = (message, isError = false) => {
   inviteStatus.textContent = message;
@@ -98,7 +100,7 @@ inviteButton.addEventListener("click", async () => {
   setStatus("Sent with love");
 
   try {
-    const response = await fetch(`${API_URL}/api/invite-click`, {
+    const response = await fetch(`${API_BASE_URL}/api/invite-click`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ clickedAt: new Date().toISOString() }),
@@ -107,10 +109,10 @@ inviteButton.addEventListener("click", async () => {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok || !data.success) {
-      setStatus("Invite could not be delivered", true);
+      setStatus("Invite could not be delivered. Please try again.", true);
     }
   } catch (error) {
-    setStatus("Invite could not be delivered", true);
+    setStatus("Server is waking up. Please try again in a moment.", true);
   }
 });
 
@@ -253,6 +255,10 @@ socket.on("disconnect", () => {
   setChatStatus("Disconnected");
   setChatEnabled(false);
   clearChat();
+});
+
+socket.on("connect_error", () => {
+  setChatHelper("Server is waking up. Try again shortly.");
 });
 
 window.addEventListener("load", () => {

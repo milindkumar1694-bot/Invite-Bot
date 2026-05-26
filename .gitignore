@@ -1,0 +1,9 @@
+.env
+node_modules
+server\node_modules
+client\node_modules
+.vercel
+.render
+dist
+build
+.DS_Store
