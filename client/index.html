@@ -42,9 +42,74 @@
           Invite
         </button>
         <p id="inviteStatus" class="status" aria-live="polite"></p>
+
+        <section class="chat-panel" aria-label="Private live chat">
+          <div class="chat-header">
+            <div>
+              <p class="chat-title">Private Love Notes</p>
+              <p class="chat-subtitle">Temporary chat just for two hearts.</p>
+            </div>
+            <span id="chatStatus" class="chat-status">Temporary chat</span>
+          </div>
+
+          <div class="room-controls">
+            <label class="room-label" for="roomCode">Room code</label>
+            <div class="room-row">
+              <input
+                id="roomCode"
+                class="room-input"
+                type="text"
+                inputmode="text"
+                placeholder="Enter or share a room code"
+                maxlength="32"
+              />
+              <button id="joinRoomButton" class="room-button" type="button">
+                Join
+              </button>
+            </div>
+            <p class="room-hint" id="roomHint">
+              Share the same code to connect privately.
+            </p>
+          </div>
+
+          <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+          <div class="chat-input-area">
+            <div class="chat-input-row">
+              <input
+                id="chatInput"
+                class="chat-input"
+                type="text"
+                placeholder="Write something sweet..."
+                maxlength="500"
+                disabled
+              />
+              <button id="sendButton" class="send-button" type="button" disabled>
+                Send
+              </button>
+            </div>
+
+            <div class="chat-actions">
+              <label class="upload-button" for="imageUpload">
+                Share a photo
+              </label>
+              <input id="imageUpload" type="file" accept="image/*" disabled />
+              <span id="chatHelper" class="chat-helper"></span>
+            </div>
+
+            <div id="imagePreview" class="image-preview hidden">
+              <img id="previewImage" alt="Selected preview" />
+              <div class="preview-actions">
+                <button id="sendImageButton" type="button">Send photo</button>
+                <button id="cancelImageButton" type="button">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
